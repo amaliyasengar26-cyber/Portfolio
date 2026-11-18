@@ -1829,14 +1829,20 @@
     document.title = SITE;
     var el = h && h !== 'top' ? document.getElementById(h) : null;
     if (el){
-      window.scrollTo(0, el.getBoundingClientRect().top + window.pageYOffset - 20);
+      window.scrollTo(0, el.getBoundingClientRect().top + window.pageYOffset - nav.offsetHeight);
     } else {
       window.scrollTo(0, 0);
     }
   }
 
+  // Hairline under the sticky nav once the page has scrolled.
+  var nav = document.querySelector('.site-nav');
+  function onScroll(){ nav.classList.toggle('is-stuck', window.pageYOffset > 4); }
+  window.addEventListener('scroll', onScroll, {passive: true});
+
   window.addEventListener('hashchange', route);
   route();
+  onScroll();
 })();
 </script>
 </body>
